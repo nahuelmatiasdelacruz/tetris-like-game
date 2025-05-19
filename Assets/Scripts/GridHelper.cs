@@ -2,17 +2,14 @@ using UnityEngine;
 
 public class GridHelper : MonoBehaviour
 {
-
     public static int width = 10;
     public static int height = 20;
     public static Transform[,] grid = new Transform[width, height];
 
-    public static Vector2 RoundVector(Vector2 v)
-    {
-        return new Vector2(Mathf.Round(v.x), Mathf.Round(v.y));
-    }
+    public static Vector2 RoundVector(Vector2 v) => new Vector2(Mathf.Round(v.x), Mathf.Round(v.y));
 
     public static bool IsInsideBorders(Vector2 pos) => (pos.x >= 0 && pos.y >= 0 && pos.x < width);
+
     public static void DeleteRow(int y)
     {
         for(int x = 0; x < width; x++)
