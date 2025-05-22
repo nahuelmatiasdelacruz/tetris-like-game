@@ -20,4 +20,26 @@ public class Piece : MonoBehaviour
         }
         return true;
     }
+
+    void UpdateGrid()
+    {
+        for(int y = 0; y < GridHelper.height; y++)
+        {
+            for(int x = 0; x < GridHelper.width; x++)
+            {
+                if (GridHelper.grid[x,y] != null)
+                {
+                    if (GridHelper.grid[x,y].parent == this.transform)
+                    {
+                        GridHelper.grid[x, y] = null;
+                    }
+                }
+            }
+        }
+        foreach(Transform block in this.transform)
+        {
+            Vector2 pos = GridHelper.RoundVector(block.position);
+            GridHelper.grid[(int)pos.x, (int)pos.y] = block;
+        }
+    }
 }
