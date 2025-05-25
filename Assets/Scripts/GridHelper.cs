@@ -3,7 +3,7 @@ using UnityEngine;
 public class GridHelper : MonoBehaviour
 {
     public static int width = 10;
-    public static int height = 20;
+    public static int height = 24;
     public static Transform[,] grid = new Transform[width, height];
 
     public static Vector2 RoundVector(Vector2 v) => new Vector2(Mathf.Round(v.x), Mathf.Round(v.y));
@@ -62,5 +62,18 @@ public class GridHelper : MonoBehaviour
                 y--;
             }
         }
+        CleanPieces();
     }
+
+    private static void CleanPieces()
+    {
+        foreach (GameObject piece in GameObject.FindGameObjectsWithTag("Piece"))
+        {
+            if (piece.transform.childCount == 0)
+            {
+                Destroy(piece);
+            }
+        }
+    }
+
 }

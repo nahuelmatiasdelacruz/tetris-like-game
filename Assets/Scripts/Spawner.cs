@@ -1,10 +1,8 @@
 using UnityEngine;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class Spawner : MonoBehaviour
 {
     public GameObject[] levelPieces;
-    
-
     public void SpawnNextPiece()
     {
         int i = Random.Range(0, levelPieces.Length);
@@ -15,5 +13,4 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         SpawnNextPiece();
     }
-
 }

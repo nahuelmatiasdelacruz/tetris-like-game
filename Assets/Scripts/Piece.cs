@@ -2,7 +2,64 @@ using UnityEngine;
 
 public class Piece : MonoBehaviour
 {
+    float lastFall = 0.0f;
+
+    private void Start()
+    {
+        if (!IsValidPiecePosition())
+        {
+            Debug.Log("GAME OVER");
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void Update()
+    {
+        
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+            MovePieceHorizontally(-1);
+        } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
+            MovePieceHorizontally(1);
+        } else if (Input.GetKeyDown(KeyCode.UpArrow)) {
+            this.transform.Rotate(new Vector3(0, 0, -90));
+            if (IsValidPiecePosition())
+            {
+                UpdateGrid();
+            }
+            else
+            {
+                this.transform.Rotate(new Vector3(0, 0, 90));
+            }
+        } else if (Input.GetKeyDown(KeyCode.DownArrow) || (Time.time - lastFall) > 1.0f )
+        {
+            this.transform.position += new Vector3(0, -1, 0);
+            if (IsValidPiecePosition())
+            {
+                UpdateGrid();
+            }
+            else
+            {
+                this.transform.position += new Vector3(0, 1, 0);
+                GridHelper.DeleteAllFullRows();
+                FindFirstObjectByType<Spawner>().SpawnNextPiece();
+                this.enabled = false;
+            }
+            lastFall = Time.time;
+        }
+    }
     
+    void MovePieceHorizontally(int direction)
+    {
+        this.transform.position += new Vector3(direction, 0, 0);
+        if (IsValidPiecePosition())
+        {
+            UpdateGrid();
+        }
+        else
+        {
+            this.transform.position += new Vector3(-direction, 0, 0);
+        }
+    }
     bool IsValidPiecePosition()
     {
         foreach(Transform block in this.transform)
