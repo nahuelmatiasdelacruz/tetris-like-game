@@ -8,7 +8,6 @@ public class Piece : MonoBehaviour
     {
         if (!IsValidPiecePosition())
         {
-            Debug.Log("GAME OVER");
             Destroy(this.gameObject);
         }
     }
@@ -97,6 +96,14 @@ public class Piece : MonoBehaviour
         {
             Vector2 pos = GridHelper.RoundVector(block.position);
             GridHelper.grid[(int)pos.x, (int)pos.y] = block;
+        }
+    }
+
+    public void ChangeBlocksTransparency(float newValue)
+    {
+        foreach(SpriteRenderer blockRenderer in GetComponentsInChildren<SpriteRenderer>())
+        {
+            blockRenderer.color = new Color(blockRenderer.color.r, blockRenderer.color.g, blockRenderer.color.b, newValue);
         }
     }
 }
